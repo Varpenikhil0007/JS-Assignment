@@ -119,4 +119,3 @@ const Cart = () => {
 export default Cart;
 
 // hiii
-//say something
