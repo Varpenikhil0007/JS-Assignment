@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
@@ -14,7 +15,8 @@ import { emptyCart } from "../../features/cartSlice";
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  console.log("success");
+
+  const [message, setMessage] = useState(""); // State to store success/error message
 
   const isSoupPresent = check_for_soup(cartItems);
   const isBreadPresent = check_for_bread(cartItems);
@@ -40,7 +42,6 @@ const Cart = () => {
   });
 
   const uploadToFirebase = async () => {
-    console.log("first");
     try {
       const docRef = await addDoc(collection(db, "bills"), {
         itemsPricing,
@@ -50,10 +51,11 @@ const Cart = () => {
           amount,
         },
       });
-      console.log("Document written with ID: ", docRef.id);
+      setMessage("Bill successfully added!"); // Set success message
       dispatch(emptyCart());
     } catch (e) {
-      console.error("Error adding document: ", e);
+      console.error("Error adding document:", e);
+      setMessage("Error adding bill. Please try again."); // Set error message
     }
   };
 
@@ -107,9 +109,21 @@ const Cart = () => {
           <p className="text-sm ">
             Empty Cart,{" "}
             <Link to="/" className="text-red-500">
-               Isn't look awful
+              Isn't look awful
             </Link>
           </p>
+        )}
+        {/* Display message */}
+        {message && (
+          <div
+            className={`mt-4 text-center py-2 px-4 rounded ${
+              message.includes("successfully")
+                ? "bg-green-100 text-green-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {message}
+          </div>
         )}
       </div>
     </>
@@ -117,4 +131,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
