@@ -131,4 +131,3 @@ const Cart = () => {
 };
 
 export default Cart;
-//dfsmdg
