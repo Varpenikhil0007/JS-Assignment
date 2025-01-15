@@ -43,7 +43,7 @@ const Cart = () => {
 
   const uploadToFirebase = async () => {
     try {
-      const docRef = await addDoc(collection(db, "bills"), {
+      await addDoc(collection(db, "bills"), {
         itemsPricing,
         billAmount: {
           subTotal,
