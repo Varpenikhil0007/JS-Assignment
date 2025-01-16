@@ -19,7 +19,7 @@ const Home = () => {
 
   // Calculate subtotal and total for the invoice
   const subTotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const taxRate = 0.18; // Example tax rate (10%)
+  const taxRate = 0.18; // Example tax rate (18%)
   const taxAmount = subTotal * taxRate;
   const total = subTotal + taxAmount;
 
